@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepScan — Deepfake Detection Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="logo-icon">🔍</div>
+    Deep<span style="color:var(--accent)">Scan</span>
+  </a>
+  <div class="nav-links">
+    <a href="#detector">Analyze</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#history">History</a>
+    <a href="#database">Database</a>
+    <span class="api-status">
+      <span class="api-dot" id="apiDot"></span>
+      <span id="apiLabel">Checking…</span>
+    </span>
+    <button class="nav-cta" onclick="document.getElementById('detector').scrollIntoView({behavior:'smooth'})">Try Now →</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge"><span class="badge-dot"></span>AI-Powered Detection Engine v2.4</div>
+        <h1 class="hero-title">
+          Detect <span class="h1">Deepfakes</span><br>
+          with <span class="h2">Neural</span><br>
+          Precision
+        </h1>
+        <p class="hero-sub">Advanced RNN-based temporal analysis combined with 3D facial landmark recognition identifies AI-generated media with 79.3% accuracy. Results stored as vector embeddings in MongoDB Atlas.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="document.getElementById('detector').scrollIntoView({behavior:'smooth'})">Analyze Media →</button>
+          <button class="btn-outline" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">See How It Works</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="face-scanner">
+          <svg viewBox="0 0 360 360" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00f5c4" stop-opacity="0.12"/>
+                <stop offset="100%" stop-color="#00f5c4" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="scanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#00f5c4" stop-opacity="0"/>
+                <stop offset="50%" stop-color="#00f5c4" stop-opacity="0.4"/>
+                <stop offset="100%" stop-color="#00f5c4" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <circle cx="180" cy="180" r="155" fill="url(#glowGrad)"/>
+            <g class="scan-ring">
+              <circle cx="180" cy="180" r="150" fill="none" stroke="#00f5c4" stroke-width="0.5" stroke-dasharray="6 4" opacity="0.35"/>
+              <circle cx="180" cy="180" r="135" fill="none" stroke="#7b5cfa" stroke-width="0.5" stroke-dasharray="3 7" opacity="0.25"/>
+            </g>
+            <path d="M72 72 L72 96 M72 72 L96 72" fill="none" stroke="#00f5c4" stroke-width="2"/>
+            <path d="M288 72 L288 96 M288 72 L264 72" fill="none" stroke="#00f5c4" stroke-width="2"/>
+            <path d="M72 288 L72 264 M72 288 L96 288" fill="none" stroke="#00f5c4" stroke-width="2"/>
+            <path d="M288 288 L288 264 M288 288 L264 288" fill="none" stroke="#00f5c4" stroke-width="2"/>
+            <line x1="105" y1="80" x2="105" y2="280" stroke="#1e2540" stroke-width="0.5" opacity="0.7"/>
+            <line x1="180" y1="80" x2="180" y2="280" stroke="#1e2540" stroke-width="0.5" opacity="0.7"/>
+            <line x1="255" y1="80" x2="255" y2="280" stroke="#1e2540" stroke-width="0.5" opacity="0.7"/>
+            <line x1="80" y1="180" x2="280" y2="180" stroke="#1e2540" stroke-width="0.5" opacity="0.7"/>
+            <ellipse cx="180" cy="178" rx="75" ry="92" fill="none" stroke="#2a3055" stroke-width="1.5"/>
+            <g class="face-pts">
+              <ellipse cx="153" cy="162" rx="13" ry="9" fill="none" stroke="#00f5c4" stroke-width="1.5"/>
+              <circle cx="153" cy="162" r="3.5" fill="#00f5c4" opacity="0.7"/>
+              <ellipse cx="207" cy="162" rx="13" ry="9" fill="none" stroke="#00f5c4" stroke-width="1.5"/>
+              <circle cx="207" cy="162" r="3.5" fill="#00f5c4" opacity="0.7"/>
+              <path d="M140 148 Q153 141 166 148" fill="none" stroke="#7b5cfa" stroke-width="1.5"/>
+              <path d="M194 148 Q207 141 220 148" fill="none" stroke="#7b5cfa" stroke-width="1.5"/>
+              <path d="M180 168 L172 197 Q180 204 188 197 Z" fill="none" stroke="#7b5cfa" stroke-width="1.5"/>
+              <path d="M163 218 Q180 231 197 218" fill="none" stroke="#00f5c4" stroke-width="1.5"/>
+              <circle cx="180" cy="268" r="3" fill="#ff4d6d"/>
+              <circle cx="110" cy="195" r="3" fill="#ff4d6d"/>
+              <circle cx="250" cy="195" r="3" fill="#ff4d6d"/>
+              <circle cx="118" cy="175" r="2.5" fill="#7b5cfa" opacity="0.8"/>
+              <circle cx="242" cy="175" r="2.5" fill="#7b5cfa" opacity="0.8"/>
+              <circle cx="180" cy="92" r="3" fill="#ff4d6d"/>
+              <circle cx="163" cy="218" r="2.5" fill="#ffb347" opacity="0.9"/>
+              <circle cx="197" cy="218" r="2.5" fill="#ffb347" opacity="0.9"/>
+              <circle cx="180" cy="197" r="2.5" fill="#ffb347" opacity="0.9"/>
+            </g>
+            <g class="scan-line" style="transform-origin:180px 178px">
+              <rect x="108" y="172" width="144" height="12" fill="url(#scanGrad)"/>
+              <line x1="108" y1="178" x2="252" y2="178" stroke="#00f5c4" stroke-width="1.5" opacity="0.9"/>
+            </g>
+            <text x="16" y="136" fill="#00f5c4" font-size="8" font-family="Space Mono" opacity="0.65">EYE_L: 0.94</text>
+            <text x="16" y="150" fill="#7b5cfa" font-size="8" font-family="Space Mono" opacity="0.65">EYE_R: 0.91</text>
+            <text x="16" y="164" fill="#ff4d6d" font-size="8" font-family="Space Mono" opacity="0.65">NOSE: 0.88</text>
+            <text x="16" y="178" fill="#ffb347" font-size="8" font-family="Space Mono" opacity="0.65">JAW: 0.96</text>
+            <text x="16" y="192" fill="#00f5c4" font-size="8" font-family="Space Mono" opacity="0.65">BROW: 0.93</text>
+            <text x="243" y="136" fill="#00f5c4" font-size="8" font-family="Space Mono" opacity="0.65" text-anchor="end">RNN: 0.793</text>
+            <text x="243" y="150" fill="#7b5cfa" font-size="8" font-family="Space Mono" opacity="0.65" text-anchor="end">GAN: 0.02</text>
+            <text x="243" y="164" fill="#ffb347" font-size="8" font-family="Space Mono" opacity="0.65" text-anchor="end">CONF: 98%</text>
+            <circle cx="180" cy="328" r="4" fill="#00f5c4" opacity="0.8">
+              <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <text x="192" y="332" fill="#00f5c4" font-size="9" font-family="Space Mono" opacity="0.7">SCANNING...</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item"><div class="stat-num">79.3%</div><div class="stat-label">Detection Accuracy</div></div>
+      <div class="stat-item"><div class="stat-num">200+</div><div class="stat-label">Media Analyzed</div></div>
+      <div class="stat-item"><div class="stat-num">128D</div><div class="stat-label">Vector Embeddings</div></div>
+      <div class="stat-item"><div class="stat-num">&lt;800ms</div><div class="stat-label">Avg Inference Time</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how-it-works">
+  <div class="container">
+    <div class="section-label">Architecture</div>
+    <h2 class="section-title">How DeepScan Works</h2>
+    <p class="section-sub">A four-layer detection pipeline combining spatial facial geometry with RNN temporal analysis and persistent vector storage.</p>
+    <div class="pipeline">
+      <div class="pipe-step"><div class="step-num s1">01</div><h3>Media Ingestion</h3><p>Uploads decoded frame-by-frame. Face regions extracted via MTCNN and normalized to 224×224 tensors.</p></div>
+      <div class="pipe-step"><div class="step-num s2">02</div><h3>Landmark Analysis</h3><p>468 3D facial keypoints mapped per frame. Geometric ratios and structural anomalies computed per region.</p></div>
+      <div class="pipe-step"><div class="step-num s3">03</div><h3>RNN Temporal Scan</h3><p>Bi-directional LSTM processes 32-frame sequences to detect unnatural motion and GAN warping artifacts.</p></div>
+      <div class="pipe-step"><div class="step-num s4">04</div><h3>Vector Storage</h3><p>128D face embeddings stored in MongoDB Atlas with cosine-similarity index for audit trails.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- DETECTOR -->
+<section id="detector">
+  <div class="container">
+    <div class="section-label">Live Analysis</div>
+    <h2 class="section-title" style="margin-bottom:2rem">Upload & Detect</h2>
+    <div class="detector-wrapper">
+      <div class="detector-header">
+        <h2>Detection Engine <span style="font-size:0.7rem;color:var(--text3);font-family:var(--font-mono);font-weight:400">← same-origin API</span></h2>
+        <div class="detector-tabs">
+          <button class="tab-btn active" onclick="setTab('image',this)">Image</button>
+          <button class="tab-btn" onclick="setTab('video',this)">Video</button>
+          <button class="tab-btn" onclick="setTab('url',this)">URL</button>
+        </div>
+      </div>
+      <div class="detector-body">
+        <div class="upload-zone">
+          <div class="drop-area" id="dropArea">
+            <input type="file" id="fileInput" accept="image/*,video/*" onchange="handleFileUpload(this)">
+            <span class="drop-icon">📁</span>
+            <div class="drop-title">Drop media here</div>
+            <div class="drop-sub">or click to browse</div>
+            <div class="drop-formats">
+              <span class="fmt-tag">JPG</span><span class="fmt-tag">PNG</span>
+              <span class="fmt-tag">MP4</span><span class="fmt-tag">MOV</span><span class="fmt-tag">WEBM</span>
+            </div>
+          </div>
+          <div class="sample-btns">
+            <div class="sample-label">Try a Sample</div>
+            <div class="sample-row">
+              <button class="sample-btn" onclick="loadSample('real')">✅ Real Face</button>
+              <button class="sample-btn" onclick="loadSample('fake')">⚠️ GAN Fake</button>
+              <button class="sample-btn" onclick="loadSample('uncertain')">❓ Ambiguous</button>
+            </div>
+          </div>
+          <div class="preview-wrap" id="previewWrap">
+            <img id="previewImg" src="" alt="Preview">
+          </div>
+        </div>
+        <div class="results-panel" id="resultsPanel">
+          <div class="idle-state" id="idleState">
+            <svg width="52" height="52" viewBox="0 0 52 52" fill="none" opacity="0.3">
+              <rect x="6" y="6" width="40" height="40" rx="8" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="26" cy="26" r="10" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="6" y1="26" x2="14" y2="26" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="38" y1="26" x2="46" y2="26" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="26" y1="6" x2="26" y2="14" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="26" y1="38" x2="26" y2="46" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="26" cy="26" r="3" fill="currentColor"/>
+            </svg>
+            <p>Upload a file or select a sample<br>to begin deepfake analysis</p>
+          </div>
+          <div class="progress-panel" id="progressPanel"></div>
+          <div id="resultsContent" style="display:none;flex-direction:column;gap:1.5rem"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="history">
+  <div class="container">
+    <div class="section-label">Session Log</div>
+    <h2 class="section-title">Analysis History</h2>
+    <p style="color:var(--text2);font-size:0.9rem;margin-top:0.5rem">Every result stored as a vector embedding in MongoDB for audit and similarity matching.</p>
+    <div class="hist-table">
+      <div class="h-row h-head">
+        <div>File</div><div>Verdict</div><div>Confidence</div><div>Model</div><div>Time</div>
+      </div>
+      <div id="historyBody">
+        <div style="padding:2.5rem;text-align:center;color:var(--text3);font-size:0.88rem">No analyses yet — upload a file or try a sample above.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DATABASE -->
+<section id="database">
+  <div class="container">
+    <div class="section-label">Backend Architecture</div>
+    <h2 class="section-title">MongoDB Vector Storage</h2>
+    <p class="section-sub">Every analyzed face generates a 128-dimensional embedding stored in Atlas with a cosine-similarity index for fast retrieval and GAN family detection.</p>
+    <div class="db-grid">
+      <div class="db-card">
+        <div class="db-icon" style="background:rgba(0,245,196,0.1);border:1px solid rgba(0,245,196,0.2)">🗄️</div>
+        <h3>Document Schema</h3>
+        <p>Each analysis stored as a rich document including the full 128D face vector, landmark data, RNN sequence features, and metadata.</p>
+        <div class="code-block"><span class="ck">"_id"</span>:       ObjectId("..."),
+<span class="ck">"file_hash"</span>:  <span class="cv">"sha256:3f8a..."</span>,
+<span class="ck">"verdict"</span>:    <span class="cv">"FAKE"</span>,
+<span class="ck">"confidence"</span>: <span class="cv">0.932</span>,
+<span class="ck">"embedding"</span>:  <span class="cv">[0.23, -0.71, ...]</span>, <span class="cc">// 128D</span>
+<span class="ck">"landmarks"</span>:  { <span class="cc">/* 468 points */</span> },
+<span class="ck">"rnn_seq"</span>:    <span class="cv">[...]</span>,          <span class="cc">// 32 frames</span>
+<span class="ck">"timestamp"</span>:  ISODate("2026-04-25"),
+<span class="ck">"model_ver"</span>:  <span class="cv">"bilstm-v2.4"</span></div>
+      </div>
+      <div class="db-card">
+        <div class="db-icon" style="background:rgba(123,92,250,0.1);border:1px solid rgba(123,92,250,0.2)">🔍</div>
+        <h3>Vector Search Index</h3>
+        <p>Atlas Vector Search enables cosine similarity queries to match unknown media against previously detected deepfake families in milliseconds.</p>
+        <div class="code-block"><span class="cc">// Atlas Search Index Definition</span>
+{
+  <span class="ck">"fields"</span>: [{
+    <span class="ck">"type"</span>:          <span class="cv">"vector"</span>,
+    <span class="ck">"path"</span>:          <span class="cv">"embedding"</span>,
+    <span class="ck">"numDimensions"</span>: <span class="cv">128</span>,
+    <span class="ck">"similarity"</span>:    <span class="cv">"cosine"</span>
+  }]
+}</div>
+      </div>
+      <div class="db-card">
+        <div class="db-icon" style="background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.2)">🧠</div>
+        <h3>RNN Architecture</h3>
+        <p>Bi-directional LSTM with 3 layers processes 32-frame sequences. Trained on FaceForensics++, DFDC, and CelebDF-v2 datasets.</p>
+        <div class="code-block"><span class="cc"># PyTorch Model Definition</span>
+BiLSTM(
+  input_size  = <span class="cv">512</span>,  <span class="cc"># CNN face feats</span>
+  hidden_size = <span class="cv">256</span>,
+  num_layers  = <span class="cv">3</span>,
+  bidirectional = <span class="cv">True</span>,
+  dropout     = <span class="cv">0.3</span>
+)
+<span class="cc"># Output: (batch,512) → FC → sigmoid</span>
+<span class="cc"># Landmark branch: MLP(468×3) → (128,)</span>
+<span class="cc"># Fusion: concat + final FC layer</span></div>
+      </div>
+      <div class="db-card">
+        <div class="db-icon" style="background:rgba(255,179,71,0.1);border:1px solid rgba(255,179,71,0.2)">📊</div>
+        <h3>Live Cluster Stats</h3>
+        <p>Live data from <code style="font-family:var(--font-mono);font-size:0.8em;color:var(--accent2)">GET /api/stats</code> on the active Flask server.</p>
+        <div class="mini-stat-grid">
+          <div class="mini-stat"><div class="ms-label">Total Records</div><div class="ms-val" id="dbTotal" style="color:var(--accent)">0</div></div>
+          <div class="mini-stat"><div class="ms-label">Fakes Found</div><div class="ms-val" id="dbFake" style="color:var(--danger)">0</div></div>
+          <div class="mini-stat"><div class="ms-label">Avg Confidence</div><div class="ms-val" id="dbConf" style="color:var(--accent2)">—</div></div>
+          <div class="mini-stat"><div class="ms-label">Vector Dims</div><div class="ms-val" style="color:var(--success)">128</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-logo">Deep<span style="color:var(--accent)">Scan</span></div>
+    <div class="foot-sub">RNN + Facial Structure Deepfake Detection Platform · MongoDB Vector Storage</div>
+    <div class="foot-tech">Flask API · PyTorch BiLSTM · MongoDB Atlas · MTCNN · FaceForensics++</div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

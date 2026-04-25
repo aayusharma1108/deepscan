@@ -1,0 +1,21 @@
+{
+  "name": "deepscan",
+  "version": "2.4.0",
+  "description": "Deepfake Detection Platform — RNN + Facial Structure Analysis",
+  "main": "app.py",
+  "scripts": {
+    "start": "python3 app.py",
+    "dev": "FLASK_DEBUG=1 python3 app.py",
+    "setup": "python3 -m pip install -r requirements.txt"
+  },
+  "keywords": [
+    "deepfake",
+    "detection",
+    "flask",
+    "neural-network",
+    "facial-recognition",
+    "mongodb"
+  ],
+  "author": "DeepScan Team",
+  "license": "MIT"
+}
