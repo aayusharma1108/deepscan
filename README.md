@@ -1,91 +1,93 @@
-# DeepScan — Deepfake Detection Platform
+# DeepScan
 
-AI-powered deepfake detection with RNN temporal analysis, 3D facial landmark recognition, and MongoDB vector storage.
+DeepScan is a deepfake detection demo that pairs a cinematic frontend with a Flask API, simulated RNN-style analysis output, and optional MongoDB-backed result history.
 
-## Quick Start
+## Highlights
+
+- Upload images or videos and get a simulated deepfake verdict with confidence metrics
+- View a multi-step analysis flow with landmark, blink, texture, and temporal indicators
+- Store analysis history in MongoDB Atlas when configured
+- Fall back to in-memory storage automatically when MongoDB is unavailable
+- Explore a polished single-page UI built with vanilla HTML, CSS, and JavaScript
+
+## Tech Stack
+
+- Frontend: HTML, CSS, vanilla JavaScript
+- Backend: Flask, Flask-CORS
+- Data: MongoDB Atlas via `pymongo` with in-memory fallback
+- Config: `python-dotenv`
+
+## Getting Started
+
+### 1. Install dependencies
 
 ```bash
-cd /Users/jimmy/Documents/Deep\ scan
 npm run setup
+```
+
+### 2. Configure environment variables
+
+```bash
+cp .env.example .env
+```
+
+Update `MONGODB_URI` in `.env` with your MongoDB Atlas connection string.
+
+### 3. Start the app
+
+```bash
 npm start
 ```
 
-This will:
-1. Check if port 5000 is available
-2. Start the Flask server
-3. **Automatically open your browser** at `http://127.0.0.1:5000`
+Open `http://127.0.0.1:5000` in your browser.
 
-## MongoDB Setup
+## Environment Variables
 
-1. Copy [`.env.example`](/Users/jimmy/Documents/Deep scan/deepscan/.env.example) to `deepscan/.env`
-2. Paste your MongoDB Atlas connection string into `MONGODB_URI`
-3. Optional: change `MONGODB_DB_NAME` and `MONGODB_COLLECTION`
-4. Run:
+| Variable | Description |
+| --- | --- |
+| `MONGODB_URI` | MongoDB Atlas connection string |
+| `MONGODB_DB_NAME` | Database name for saved analyses |
+| `MONGODB_COLLECTION` | Collection name for saved analyses |
+| `PORT` | Flask server port, defaults to `5000` |
+| `HOST` | Flask bind address, defaults to `0.0.0.0` |
+| `FLASK_DEBUG` | Enables debug mode unless set to `0`, `false`, or `no` |
 
-```bash
-cd /Users/jimmy/Documents/Deep\ scan
-npm run setup
-npm start
-```
+If `MONGODB_URI` is missing or invalid, the app still works and stores results in memory for the current session.
 
-If `MONGODB_URI` is missing or invalid, the app still runs but falls back to in-memory storage. In the UI you will see `API Online (Memory)` instead of `API + Mongo Online`.
-
-## Project Structure
-
-```
-deepscan/
-├── app.py              ← Flask server
-├── index.html          ← Frontend page
-├── style.css           ← All styles
-├── app.js              ← All frontend JS + API calls
-├── requirements.txt    ← Python dependencies
-├── package.json        ← NPM scripts
-└── vectors/            ← SVG vector assets
-    ├── logo.svg
-    ├── neural-network.svg
-    ├── face-landmarks.svg
-    └── shield-check.svg
-```
-
-## NPM Scripts
+## Available Scripts
 
 | Command | Description |
-|---------|-------------|
-| `npm start` | Start server + auto-open browser |
-| `npm run dev` | Start with debug mode |
-| `npm run setup` | Install Python dependencies |
-
-## Using a Different Port
-
-If port 5000 is busy (macOS AirPlay Receiver uses it by default):
-
-```bash
-PORT=8080 npm start
-```
-
-Then manually open: `http://127.0.0.1:8080`
+| --- | --- |
+| `npm run setup` | Install Python dependencies from `requirements.txt` |
+| `npm start` | Start the Flask app |
+| `npm run dev` | Start the Flask app in debug mode |
 
 ## API Endpoints
 
 | Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/` | GET | Serves index.html |
-| `/style.css` | GET | Serves CSS |
-| `/app.js` | GET | Serves JavaScript |
-| `/api/analyze` | POST | Run deepfake detection |
-| `/api/history` | GET | Last 20 results (JSON) |
-| `/api/stats` | GET | Aggregate stats (JSON) |
+| --- | --- | --- |
+| `/` | `GET` | Serve the frontend |
+| `/style.css` | `GET` | Serve stylesheet |
+| `/app.js` | `GET` | Serve frontend logic |
+| `/api/analyze` | `POST` | Analyze an uploaded file or demo payload |
+| `/api/history` | `GET` | Fetch recent analysis history |
+| `/api/stats` | `GET` | Fetch aggregate session statistics |
 
-## Troubleshooting
+## Project Structure
 
-### Port already in use
-
-The startup script will automatically detect this and either:
-- Kill stale Python processes and retry
-- Show instructions if macOS AirPlay Receiver is blocking the port
-
-### Browser didn't open automatically
-
-Manually navigate to the URL shown in the terminal, e.g.:
+```text
+.
+├── app.py
+├── app.js
+├── index.html
+├── style.css
+├── package.json
+├── requirements.txt
+└── vectors/
 ```
-http://127.0.0.1:5000
+
+## Notes
+
+- This project currently simulates model output for demo purposes.
+- Uploaded files are used to generate analysis results, but no real deep learning model is executed yet.
+- MongoDB connectivity is optional and only affects persistence.
